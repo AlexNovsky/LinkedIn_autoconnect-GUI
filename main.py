@@ -207,23 +207,24 @@ def save_params():
     if empty_param_field_check():
         data = prepare_param()
         company_list = data['search_list']
-        config.search_list = company_list
-    #     job_titles = data['job_titles']
-    #
-    #     # Read the entire config.py file
-    #     with open('data/config.py', 'r', encoding='utf8') as infile:
-    #         lines = infile.readlines()
-    #
-    #     # Find the line that contains search_list and replace it
-    #     for i, line in enumerate(lines):
-    #         if line.strip().startswith('search_list'):
-    #             lines[i] = f'search_list = {company_list}\n'
-    #             break  # Stop searching once found
-    #
-    #     # Write the modified lines back to config.py
-    #     with open('data/config.py', 'w', encoding='utf8') as outfile:
-    #         outfile.writelines(lines)
-    #
+        job_titles = data['job_titles']
+
+        # Read the entire config.py file
+        with open('data/config.py', 'r', encoding='utf8') as infile:
+            lines = infile.readlines()
+
+        # Find the line that contains search_list and replace it
+        for i, line in enumerate(lines):
+            if line.strip().startswith('search_list'):
+                lines[i] = f'search_list = {company_list}\n'
+            if line.strip().startswith('job_titles'):
+                lines[i] = f'job_titles = {job_titles}\n'
+            # break  # Stop searching once found
+
+        # Write the modified lines back to config.py
+        with open('data/config.py', 'w', encoding='utf8') as outfile:
+            outfile.writelines(lines)
+
 
 # ==================== Console operations ====================
 
