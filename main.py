@@ -112,6 +112,26 @@ def get_cred():
     finally:
         pass
 
+def get_params():
+    try:
+        with open('data/config.py', 'r', encoding='utf8') as outfile:
+            data = {
+            "search_list": config.search_list,
+            "job_titles": config.job_titles,
+            }
+        return data
+    except FileNotFoundError:
+        with open('data/config.py', 'w', encoding='utf8') as outfile:
+            outfile.write('search_list = "[]"\n')
+            outfile.write('job_title = "[]"\n')
+            data = {
+                "search_list": config.search_list,
+                "job_titles": config.job_titles,
+            }
+            return data
+    finally:
+        pass
+
 def predefine_cred():
     global login_entry, pwd_entry
     """
@@ -126,6 +146,22 @@ def predefine_cred():
     else:
         login_entry.insert(0, cred['email'])
         pwd_entry.insert(0, cred['password'])
+
+
+def predefine_params():
+    global job_title_entry, company_entry
+    """
+    Check if data file with login and password exist and populating values at the application start.
+    If file doesn't exist (first run) - returning None
+    :return:            None
+    """
+    data = get_params()
+    if len(data['search_list']) == 0 and len(data['job_titles']) == 0:
+        company_entry.insert(0, 'name the company')
+        job_title_entry(0, 'name the position title')
+    else:
+        company_entry.insert(0, data['search_list'])
+        job_title_entry.insert(0, data['job_titles'])
 
 def prepare_cred():
     global login_entry, pwd_entry
@@ -147,6 +183,7 @@ def prepare_param():
         "search_list": split_company,
         "job_titles":  split_title,
     }
+    return params_to_write
 
 def save_cred():
     if empty_cred_field_check():
@@ -157,49 +194,37 @@ def save_cred():
             outfile.write(f'email = "{username}"\n')
             outfile.write(f'password = "{pwd}"\n')
 
+# def save_params():
+#     if empty_param_field_check():
+#         data = prepare_param()
+#         company_list = data['search_list']
+#         job_titles = data['job_titles']
+#         with open('data/config.py', 'a', encoding='utf8') as outfile:
+#             outfile.write(f'search_list = {company_list}\n')
+#             # outfile.write(f'password = "{pwd}"\n')
+
 def save_params():
     if empty_param_field_check():
         data = prepare_param()
         company_list = data['search_list']
-        job_titles = data['job_titles']
-        with open('data/config.py', 'w', encoding='utf8') as outfile:
-            outfile.write(f'search_list: [{company_list}]\n')
-            # outfile.write(f'password = "{pwd}"\n')
+        config.search_list = company_list
+    #     job_titles = data['job_titles']
+    #
+    #     # Read the entire config.py file
+    #     with open('data/config.py', 'r', encoding='utf8') as infile:
+    #         lines = infile.readlines()
+    #
+    #     # Find the line that contains search_list and replace it
+    #     for i, line in enumerate(lines):
+    #         if line.strip().startswith('search_list'):
+    #             lines[i] = f'search_list = {company_list}\n'
+    #             break  # Stop searching once found
+    #
+    #     # Write the modified lines back to config.py
+    #     with open('data/config.py', 'w', encoding='utf8') as outfile:
+    #         outfile.writelines(lines)
+    #
 
-def get_params():
-    try:
-        with open('data/config.py', 'r', encoding='utf8') as outfile:
-            data = {
-            "search_list": config.search_list,
-            "job_titles": config.job_titles,
-            }
-        return data
-    except FileNotFoundError:
-        with open('data/config.py', 'w', encoding='utf8') as outfile:
-            outfile.write('search_list = "[]"\n')
-            outfile.write('job_title = "[]"\n')
-            data = {
-                "search_list": config.search_list,
-                "job_titles": config.job_titles,
-            }
-            return data
-    finally:
-        pass
-
-def predefine_params():
-    global job_title_entry, company_entry
-    """
-    Check if data file with login and password exist and populating values at the application start.
-    If file doesn't exist (first run) - returning None
-    :return:            None
-    """
-    data = get_params()
-    if len(data['search_list']) == 0 and len(data['job_titles']) == 0:
-        company_entry.insert(0, 'name the company')
-        job_title_entry(0, 'name the position title')
-    else:
-        company_entry.insert(0, data['search_list'])
-        job_title_entry.insert(0, data['job_titles'])
 # ==================== Console operations ====================
 
 # ==================== Building GUI ====================
@@ -239,6 +264,14 @@ def create_buttons():
     save_login_btn = Button(text='', borderwidth=0, border=0, image=save_btn_img, highlightthickness=0,
                             command=save_cred)
     save_login_btn.grid(column=2, row=2)
+
+    clear_params_btn = Button(text='', borderwidth=0, border=0, image=clear_btn_img, highlightthickness=0,
+                             command=clear_params)
+    clear_params_btn.grid(column=2, row=3)
+    save_params_btn = Button(text='', borderwidth=0, border=0, image=save_btn_img, highlightthickness=0,
+                            command=save_params)
+    save_params_btn.grid(column=2, row=4)
+
     connect_btn_img = PhotoImage(file='data/img/connect_btn_img.png')
     connect_btn = Button(text='', borderwidth=0, border=0, image=connect_btn_img, highlightthickness=0,
                          command=clear_cred)
