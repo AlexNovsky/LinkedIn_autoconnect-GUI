@@ -1,3 +1,4 @@
+import importlib
 from tkinter import *
 from tkinter import messagebox
 import os
@@ -13,7 +14,7 @@ if not os.path.isfile('data/credentials.py'):
         outfile.write('password = "your_default_password"\n')
 
 from data import credentials
-from data import config
+from data import config as config
 # from modules.subscribe_from_search import sub_search
 
 from pages.search_page import SearchPage
@@ -21,6 +22,7 @@ from modules.base import get_data
 from modules.login import login
 from warnings import simplefilter
 # from main import update_console_output
+# import importlib
 
 # ==================== Variables ====================
 white = '#FFFFFF'
@@ -200,6 +202,7 @@ def save_cred():
         with open('data/credentials.py', 'w', encoding='utf8') as outfile:
             outfile.write(f'email = "{username}"\n')
             outfile.write(f'password = "{pwd}"\n')
+    importlib.reload(config)
 
 def save_params():
     if empty_param_field_check():
@@ -215,13 +218,17 @@ def save_params():
         for i, line in enumerate(lines):
             if line.strip().startswith('search_list'):
                 lines[i] = f'search_list = {company_list}\n'
+                break
+        for i, line in enumerate(lines):
             if line.strip().startswith('job_titles'):
                 lines[i] = f'job_titles = {job_titles}\n'
+                break
             # break  # Stop searching once found
 
         # Write the modified lines back to config.py
         with open('data/config.py', 'w', encoding='utf8') as outfile:
             outfile.writelines(lines)
+    importlib.reload(config)
 
 # ==================== Console operations ====================
 def update_console_output(text):

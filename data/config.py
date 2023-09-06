@@ -3,5 +3,5 @@ connection_level = 2
 per_company_limit = 10
 driver_wait = 20
 headless = False
-search_list = ['uber']
-job_titles = ['Human resources']
+search_list = ['pornhub']
+job_titles = ['HR', 'talent']
