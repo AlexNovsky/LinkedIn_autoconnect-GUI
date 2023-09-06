@@ -13,16 +13,14 @@ if not os.path.isfile('data/credentials.py'):
         outfile.write('email = "your_default_email"\n')
         outfile.write('password = "your_default_password"\n')
 
+
 from data import credentials
 from data import config as config
-# from modules.subscribe_from_search import sub_search
-
 from pages.search_page import SearchPage
 from modules.base import get_data
 from modules.login import login
 from warnings import simplefilter
-# from main import update_console_output
-# import importlib
+
 
 # ==================== Variables ====================
 white = '#FFFFFF'
@@ -129,17 +127,7 @@ def get_params():
         "job_titles": config.job_titles,
         }
     return data
-    # except FileNotFoundError:
-    #     with open('data/config.py', 'w', encoding='utf8') as outfile:
-    #         outfile.write('search_list = "[]"\n')
-    #         outfile.write('job_titles = "[]"\n')
-    #         data = {
-    #             "search_list": [],
-    #             "job_titles": [],
-    #         }
-    #         return data
-    # finally:
-    #     pass
+
 
 def predefine_cred():
     global login_entry, pwd_entry
@@ -235,6 +223,7 @@ def update_console_output(text):
     console_output.config(state=NORMAL)  # Enable editing
     console_output.insert(END, text + '\n')  # Append text with a newline
     console_output.config(state=DISABLED)  # Disable editing
+    console_output.update_idletasks()
 
 # ==================== Search operations ====================
 def sub_search():
