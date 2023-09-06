@@ -93,44 +93,44 @@ def empty_param_field_check():
 
 
 def get_cred():
-    try:
-        with open('data/credentials.py', 'r', encoding='utf8') as outfile:
-            data = {
-            "email": credentials.email,
-            "password": credentials.password,
-            }
-        return data
-    except FileNotFoundError:
-        with open('data/credentials.py', 'w', encoding='utf8') as outfile:
-            outfile.write('email = "your_default_email"\n')
-            outfile.write('password = "your_default_password"\n')
-            data = {
-                "email": credentials.email,
-                "password": credentials.password,
-            }
-            return data
-    finally:
-        pass
+    # try:
+    with open('data/credentials.py', 'r', encoding='utf8') as outfile:
+        data = {
+        "email": credentials.email,
+        "password": credentials.password,
+        }
+    return data
+    # except FileNotFoundError:
+    #     with open('data/credentials.py', 'w', encoding='utf8') as outfile:
+    #         outfile.write('email = "your_default_email"\n')
+    #         outfile.write('password = "your_default_password"\n')
+    #         data = {
+    #             "email": "your_default_email",
+    #             "password": "your_default_password",
+    #         }
+    #         return data
+    # finally:
+    #     pass
 
 def get_params():
-    try:
-        with open('data/config.py', 'r', encoding='utf8') as outfile:
-            data = {
-            "search_list": config.search_list,
-            "job_titles": config.job_titles,
-            }
-        return data
-    except FileNotFoundError:
-        with open('data/config.py', 'w', encoding='utf8') as outfile:
-            outfile.write('search_list = "[]"\n')
-            outfile.write('job_title = "[]"\n')
-            data = {
-                "search_list": config.search_list,
-                "job_titles": config.job_titles,
-            }
-            return data
-    finally:
-        pass
+    # try:
+    with open('data/config.py', 'r', encoding='utf8') as outfile:
+        data = {
+        "search_list": config.search_list,
+        "job_titles": config.job_titles,
+        }
+    return data
+    # except FileNotFoundError:
+    #     with open('data/config.py', 'w', encoding='utf8') as outfile:
+    #         outfile.write('search_list = "[]"\n')
+    #         outfile.write('job_titles = "[]"\n')
+    #         data = {
+    #             "search_list": [],
+    #             "job_titles": [],
+    #         }
+    #         return data
+    # finally:
+    #     pass
 
 def predefine_cred():
     global login_entry, pwd_entry
@@ -160,8 +160,8 @@ def predefine_params():
         company_entry.insert(0, 'name the company')
         job_title_entry(0, 'name the position title')
     else:
-        company_entry.insert(0, data['search_list'])
-        job_title_entry.insert(0, data['job_titles'])
+        company_entry.insert(0, ', '.join(data['search_list']))
+        job_title_entry.insert(0, ', '.join(data['job_titles']))
 
 def prepare_cred():
     global login_entry, pwd_entry
@@ -177,8 +177,8 @@ def prepare_param():
     global company_entry, job_title_entry
     company = get_value(company_entry)
     title = get_value(job_title_entry)
-    split_company = company.split()
-    split_title = title.split()
+    split_company = company.split(', ')
+    split_title = title.split(', ')
     params_to_write = {
         "search_list": split_company,
         "job_titles":  split_title,
@@ -193,15 +193,6 @@ def save_cred():
         with open('data/credentials.py', 'w', encoding='utf8') as outfile:
             outfile.write(f'email = "{username}"\n')
             outfile.write(f'password = "{pwd}"\n')
-
-# def save_params():
-#     if empty_param_field_check():
-#         data = prepare_param()
-#         company_list = data['search_list']
-#         job_titles = data['job_titles']
-#         with open('data/config.py', 'a', encoding='utf8') as outfile:
-#             outfile.write(f'search_list = {company_list}\n')
-#             # outfile.write(f'password = "{pwd}"\n')
 
 def save_params():
     if empty_param_field_check():
@@ -225,8 +216,12 @@ def save_params():
         with open('data/config.py', 'w', encoding='utf8') as outfile:
             outfile.writelines(lines)
 
-
 # ==================== Console operations ====================
+def update_console_output(text):
+    console_output.config(state=NORMAL)  # Enable editing
+    console_output.insert(END, text + '\n')  # Append text with a newline
+    console_output.config(state=DISABLED)  # Disable editing
+
 
 # ==================== Building GUI ====================
 def create_entry():
@@ -289,6 +284,11 @@ main_bg = PhotoImage(file='data/img/cropped_main_bg.png')
 canvas_image = canvas.create_image(248, 70, image=main_bg)
 canvas.config(bg=white, highlightthickness=0)
 canvas.grid(column=0, row=0, columnspan=3)
+
+# Create a Text widget for console output
+console_output = Text(window, width=70, height=35, wrap=WORD, state=DISABLED)
+console_output.grid(column=0, row=7, columnspan=3, pady=(10, 0))  # Adjust row and padding as needed
+
 
 create_labels()
 create_entry()
