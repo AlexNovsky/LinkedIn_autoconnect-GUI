@@ -3,5 +3,5 @@ connection_level = 2
 per_company_limit = 10
 driver_wait = 20
 headless = False
-search_list = ['Tik Tok']
-job_titles = ['recruiter']
+search_list = ['uber']
+job_titles = ['Human resources']
