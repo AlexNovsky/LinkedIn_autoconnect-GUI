@@ -281,24 +281,27 @@ def create_labels():
     hint_txt.grid(column=0, row=5, columnspan=2)
 
 def create_buttons():
-    global clear_btn_img, save_btn_img, connect_btn_img
-    clear_btn_img = PhotoImage(file='data/img/clear_btn_img.png')
-    clear_login_btn = Button(text='', borderwidth=0, border=0, image=clear_btn_img, highlightthickness=0,
+    global clear_login_btn_img, save_login_btn_img, connect_btn_img
+    clear_login_btn_img = PhotoImage(file='data/img/clear_login_btn.png')
+    clear_login_btn = Button(text='', borderwidth=0, border=0, image=clear_login_btn_img, highlightthickness=0,
                              command=clear_cred)
     clear_login_btn.grid(column=2, row=1)
-    save_btn_img = PhotoImage(file='data/img/save_btn_img.png')
-    save_login_btn = Button(text='', borderwidth=0, border=0, image=save_btn_img, highlightthickness=0,
+    save_login_btn_img = PhotoImage(file='data/img/save_login_btn.png')
+    save_login_btn = Button(text='', borderwidth=0, border=0, image=save_login_btn_img, highlightthickness=0,
                             command=save_cred)
     save_login_btn.grid(column=2, row=2)
 
-    clear_params_btn = Button(text='', borderwidth=0, border=0, image=clear_btn_img, highlightthickness=0,
+    clear_params_btn_img = PhotoImage(file='data/img/clear_search_btn.png')
+    clear_params_btn = Button(text='', borderwidth=0, border=0, image=clear_params_btn_img, highlightthickness=0,
                              command=clear_params)
     clear_params_btn.grid(column=2, row=3)
-    save_params_btn = Button(text='', borderwidth=0, border=0, image=save_btn_img, highlightthickness=0,
+
+    save_params_btn_img = PhotoImage(file='data/img/save_search_btn.png')
+    save_params_btn = Button(text='', borderwidth=0, border=0, image=save_params_btn_img, highlightthickness=0,
                             command=save_params)
     save_params_btn.grid(column=2, row=4)
 
-    connect_btn_img = PhotoImage(file='data/img/connect_btn_img.png')
+    connect_btn_img = PhotoImage(file='data/img/extend_netw_btn.png')
     connect_btn = Button(text='', borderwidth=0, border=0, image=connect_btn_img, highlightthickness=0,
                          command=sub_search)
     connect_btn.grid(column=1, row=6)
