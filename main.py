@@ -126,7 +126,7 @@ class Application:
             with open('data/credentials.py', 'w', encoding='utf8') as outfile:
                 outfile.write(f'email = "{username}"\n')
                 outfile.write(f'password = "{pwd}"\n')
-        importlib.reload(credentials)
+            importlib.reload(credentials)
 
     def save_params(self) -> None:
         """
@@ -157,7 +157,7 @@ class Application:
             # Write the modified lines back to config.py
             with open('data/config.py', 'w', encoding='utf8') as outfile:
                 outfile.writelines(lines)
-        importlib.reload(config)
+            importlib.reload(config)
 
     # ==================== Console operations ====================
     def update_console_output(self, text) -> None:
