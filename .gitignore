@@ -3,5 +3,6 @@
 /workspace.xml
 .idea
 /data/src
+/src
 # Byte-compiled / optimized / DLL files
 *__pycache__/
