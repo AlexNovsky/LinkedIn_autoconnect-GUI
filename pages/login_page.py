@@ -1,3 +1,6 @@
+"""
+        Original script (c) Sergey Kolokolov, part of the LinkedIn autoconnect
+"""
 from pages.base_page import BasePage
 
 

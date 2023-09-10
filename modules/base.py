@@ -1,3 +1,6 @@
+"""
+        Original script (c) Sergey Kolokolov, part of the LinkedIn autoconnect
+"""
 from selenium import webdriver
 from data import config
 from data import credentials

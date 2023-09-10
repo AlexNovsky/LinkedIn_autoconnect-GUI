@@ -1,3 +1,6 @@
+"""
+        Original script (c) Sergey Kolokolov, part of the LinkedIn autoconnect
+"""
 import os
 import json
 from yaml import safe_load

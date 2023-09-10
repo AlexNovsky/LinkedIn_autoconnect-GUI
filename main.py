@@ -174,7 +174,7 @@ class Application:
     # ==================== Search operations ====================
     def sub_search(self):
         """
-        Subscribe from search object ((c) Sergey Kolokolov) with minor integration tweaks
+        Subscribe from search, original script (c) Sergey Kolokolov, with minor integration tweaks
         """
         if self.empty_param_field_check() and self.empty_cred_field_check():
             self.save_cred()
